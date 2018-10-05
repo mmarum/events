@@ -1,6 +1,12 @@
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
+<head>
+<title>Events</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<div id="nav">{{ user }}</p>
 {% for item in form %}
   {% if item.errors %}
     {% for error in item.errors %}
@@ -8,6 +14,7 @@
     {% endfor %}
   {% endif %}
 {% endfor %}
+</div>
 <form action="/add" method="POST" accept-charset="utf-8" novalidate>
 <table>
 {% for item in form %}
@@ -18,3 +25,5 @@
 {% endfor %}
 </table>
 </form>
+</body>
+</html>

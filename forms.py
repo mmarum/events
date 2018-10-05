@@ -5,24 +5,34 @@ from wtforms.validators import InputRequired, DataRequired, ValidationError
 from reader import Read
 
 
-def check_user():
+def check_password(username):
     r = Read('users')
-    users = r.read_file()
-    print(users)
+    user_data = r.read_file()
+    print(user_data)
+    if username in user_data:
+        password = user_data[username]
+        return password
+    else:
+        raise ValidationError('Username not in system')
 
 
-def validate_password(form, field):
-    if field.data:
-        password = field.data
-        hashed_password = hashlib.md5(password.encode('utf-8')).hexdigest()
-        if hashed_password != 'f4e86e89151d55bad3fbd1c62a797d6f':
-            raise ValidationError('Password is not valid.')
+def hashed_password(password):
+    hashed_password = hashlib.md5(password.encode('utf-8')).hexdigest()
+    return hashed_password
 
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
-    password = PasswordField('Password', validators=[InputRequired(), validate_password])
+    password = PasswordField('Password', validators=[InputRequired()])
     submit = SubmitField('Submit')
+
+
+    def validate(self):
+        if not FlaskForm.validate(self):
+            raise ValidationError('AUTH_FAIL')
+        if hashed_password(self.password.data) != check_password(self.username.data):
+            raise ValidationError('Password did not match')
+        return True
 
 
 class EventForm(FlaskForm):

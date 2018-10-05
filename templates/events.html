@@ -1,6 +1,14 @@
-
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html>
+<html>
+<head>
+<title>Events</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+<body>
+<div id="nav">{{ user }} <a href="/add">Add</a></p>
 {% for item in data %}
-  <div>{{ item.title }}</div>
+  <div>{{ item.title }} {{ item.start.split()[0] }}</div>
 {% endfor %}
+</body>
+</html>
