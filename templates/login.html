@@ -1,0 +1,15 @@
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% for item in form %}
+  {% if item.errors %}
+    {% for error in item.errors %}
+      <div>{{ item.label }}: {{ error }}</div>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+<form action="/login" method="POST" accept-charset="utf-8" novalidate>
+{% for item in form %}
+  <div>{{ item }}</div>
+{% endfor %}
+</form>

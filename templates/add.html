@@ -1,0 +1,20 @@
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% for item in form %}
+  {% if item.errors %}
+    {% for error in item.errors %}
+      <div>{{ item.label }}: {{ error }}</div>
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+<form action="/add" method="POST" accept-charset="utf-8" novalidate>
+<table>
+{% for item in form %}
+  <tr>
+  <td>{% if item.name != "csrf_token" and item.name != "submit" %}{{ item.label }}{% endif %}</td>
+  <td>{{ item }}</td>
+  </tr>
+{% endfor %}
+</table>
+</form>
