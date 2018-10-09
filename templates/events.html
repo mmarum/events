@@ -4,11 +4,35 @@
 <title>Events</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+table {
+ width: 100%;
+}
+td {
+ width: 14%;
+}
+</style>
 </head>
 <body>
-<div id="nav">{{ user }} <a href="/add">Add</a> <a href="/edit">Edit</a></p>
+<div id="nav">
+	{{ user }} <a href="/add">Add</a> <a href="/edit">Edit</a></p>
+</div>
+
 {% for item in data %}
   <div>{{ item.title }} {{ item.start.split()[0] }}</div>
 {% endfor %}
+
+<table>
+<tr>
+{% for item in calendar %}
+  <td>{{ item }}</td>
+  {% if loop.index is divisibleby 7 %}
+    </tr>
+    <tr>
+  {% endif %}
+{% endfor %}
+</tr>
+</table>
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 import flask
 import json
+import calendar
 from flask import request
 from forms import LoginForm, EventForm
 from filer import File
@@ -20,7 +21,19 @@ def main():
             f = File('events')
             data = f.read()
             data = sorted(data, key=lambda x: x['start'])
-            return flask.render_template('events.html', data=data, user=username)
+
+            c = calendar.TextCalendar(calendar.SUNDAY)
+            c = c.formatmonth(2018, 8)
+            c = c.replace('   ', '0 ')
+            items = c.split()
+
+            print(items)
+            
+            month = c[1]
+            year = c[2]
+            items = items[10:]
+
+            return flask.render_template('events.html', data=data, user=username, calendar=items)
     else:
     	return flask_redirect('/login')
 
