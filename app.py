@@ -2,7 +2,7 @@ import flask
 import json
 from flask import request
 from forms import LoginForm, EventForm
-from reader import Read
+from filer import File
 
 # export FLASK_ENV=development
 # FLASK_APP=app.py flask run
@@ -17,8 +17,9 @@ def main():
     if get_cookie('event_app'):
         username =  get_cookie('event_app').split('=')[1]
         if username_legit(username):
-            r = Read('events')
-            data = r.read_file()
+            f = File('events')
+            data = f.read()
+            data = sorted(data, key=lambda x: x['start'])
             return flask.render_template('events.html', data=data, user=username)
     else:
     	return flask_redirect('/login')
@@ -45,7 +46,17 @@ def add():
             form = EventForm()
             if request.method == 'POST':
                 if form.validate_on_submit():
-                    return 'FORM SUCCESS'
+                    new_data = form.data
+                    new_data['start'] = str(new_data['start'])
+                    new_data['end'] = str(new_data['end'])
+                    del new_data['csrf_token']
+                    del new_data['submit']
+                    f = File('events')
+                    data = f.read()
+                    data.append(new_data)
+                    data = json.dumps(data)
+                    f.write(data)
+                    return data
                 else:
                     return 'FORM FAILED'
             else:
@@ -54,10 +65,9 @@ def add():
         return flask_redirect('/login')
 
 
-
-
-        
-
+@app.route("/edit", methods=['GET', 'POST'])
+def edit():
+    return 'EDIT'
 
 # # # # # # # # # # # # # # # # #
 
@@ -83,9 +93,8 @@ def flask_redirect(location):
 
 
 def username_legit(username):
-    r = Read('users')
-    user_data = r.read_file()
-    print(user_data)
+    f = File('users')
+    user_data = f.read()
     if username in user_data:
         return True
     else:

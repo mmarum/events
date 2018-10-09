@@ -2,13 +2,12 @@ import hashlib
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, HiddenField, DateField, validators
 from wtforms.validators import InputRequired, DataRequired, ValidationError
-from reader import Read
+from filer import File
 
 
 def check_password(username):
-    r = Read('users')
-    user_data = r.read_file()
-    print(user_data)
+    f = File('users')
+    user_data = f.read()
     if username in user_data:
         password = user_data[username]
         return password
@@ -39,5 +38,7 @@ class EventForm(FlaskForm):
     title = StringField('Title', validators=[InputRequired()])
     start = DateField('Start', validators=[InputRequired()], format='%Y-%m-%d %H:%M:%S')
     end = DateField('End', validators=[InputRequired()], format='%Y-%m-%d %H:%M:%S')
+    location = StringField('Location')
+    description = StringField('Description')
     submit = SubmitField('Submit')
 

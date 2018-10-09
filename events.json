@@ -1,6 +1,19 @@
-[
-{"start": "2018-09-13 15:05:00", "end": "2018-09-14 16:05:00", "title": "event-1"},
-{"start": "2018-09-14 16:05:00", "end": "2018-09-15 17:05:00", "title": "event-2"},
-{"start": "2018-09-15 17:05:00", "end": "2018-09-16 18:05:00", "title": "event-3"},
-{"start": "2018-09-16 18:05:00", "end": "2018-09-17 19:05:00", "title": "event-4"}
-]
+[{
+	"title": "Suspicious hissing package falls from sky too close for comfort to President Trump",
+	"start": "2018-01-01",
+	"end": "2018-01-02",
+	"location": "Jersey City",
+	"description": "The Office"
+}, {
+	"title": "Erdogan tells Turks to buy crumbling lira as Trump turns the screws",
+	"start": "2019-01-01",
+	"end": "2019-01-02",
+	"location": "Jersey City",
+	"description": "The Office"
+}, {
+	"title": "Trump Pushes Back Against Leftist Premises And Throws It Right Back Down Their Throats",
+	"start": "2017-01-01",
+	"end": "2017-01-02",
+	"location": "Jersey City",
+	"description": "The Office 33"
+}]

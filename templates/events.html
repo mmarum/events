@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
-<div id="nav">{{ user }} <a href="/add">Add</a></p>
+<div id="nav">{{ user }} <a href="/add">Add</a> <a href="/edit">Edit</a></p>
 {% for item in data %}
   <div>{{ item.title }} {{ item.start.split()[0] }}</div>
 {% endfor %}
