@@ -22,18 +22,77 @@ def main():
             data = f.read()
             data = sorted(data, key=lambda x: x['start'])
 
-            c = calendar.TextCalendar(calendar.SUNDAY)
-            c = c.formatmonth(2018, 8)
-            c = c.replace('   ', '0 ')
-            items = c.split()
+            # THIS WILL ALL BECOME A CLASS
 
-            print(items)
-            
-            month = c[1]
-            year = c[2]
-            items = items[10:]
+            c = calendar.TextCalendar(calendar.MONDAY) # week starts with MONDAY
 
-            return flask.render_template('events.html', data=data, user=username, calendar=items)
+            year = 2018
+            month = 10
+
+            weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+
+            monthrange = calendar.monthrange(year, month)
+            weekday_of_first = monthrange[0] # 'zero' is MONDAY
+            days_in_month = monthrange[1]
+
+            grid_array = []
+
+            if month <= 9:
+                month = str(month).zfill(2)
+
+            # Creating skeleton json for the grid
+            for n in range(days_in_month):
+                day = n + 1
+                if day <= 9:
+                    day = str(day).zfill(2)
+                grid_array.append( { "day": str(year) + "-" + str(month) + "-" + str(day), "events": [ ] } )
+
+            #print(grid_array)
+
+            # INSERT DATA INTO GRID
+
+            # NOTE: In its current state
+            # it assumes that data holds *this* month's data
+            # it does not necessarily
+            # TODO: make that dynamic
+
+            # possible fix: break events.json up 
+            # into month-based files like events-2018-10.json ???
+
+            previous = -1
+            for item in data:
+                placement = int(item['start'].split('-')[2].lstrip('0')) - 1
+                #print(placement)
+                if previous != placement:
+                    grid_array[placement]['events'] = []
+                grid_array[placement]['events'].append(item)
+                previous = placement
+
+
+            #print(grid_array)
+
+            # INSERT PLACEHOLDER ITEMS BEFORE THE FIRST
+            # so that first starts in correct spot on grid
+            if weekday_of_first > 0:
+                y = range(weekday_of_first)
+                for b in y:
+                    grid_array.insert(0, { "day": "xxx", "events": [ ] })
+
+            array_length = len(grid_array)
+
+            # INSERT PLACEHOLDER ITEMS AFTER
+            if array_length > 35:
+                grid_size = 42
+            else:
+                grid_size = 35
+            book_end = grid_size - array_length
+
+            if book_end > 0:
+                y = range(book_end)
+                for b in y:
+                    grid_array.append({ "day": "xxx", "events": [ ] })
+
+            return flask.render_template('events.html', data=data, user=username, calendar=grid_array, weekdays=weekdays)
     else:
     	return flask_redirect('/login')
 

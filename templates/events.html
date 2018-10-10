@@ -22,14 +22,26 @@ td {
   <div>{{ item.title }} {{ item.start.split()[0] }}</div>
 {% endfor %}
 
-<table>
+<table border=1>
+<tr>
+{% for day in weekdays %}
+  <td>{{ day }}</td>
+{% endfor %}
+</tr>
 <tr>
 {% for item in calendar %}
-  <td>{{ item }}</td>
+  <td>
+  <p>{{ item.day }}</p>
+  {% for event in item.events %}
+    <p>{{ event.title }}</p>
+  {% endfor %}
+  </td>
+
   {% if loop.index is divisibleby 7 %}
     </tr>
     <tr>
   {% endif %}
+
 {% endfor %}
 </tr>
 </table>
