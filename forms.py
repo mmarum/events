@@ -19,6 +19,15 @@ def hashed_password(password):
     hashed_password = hashlib.md5(password.encode('utf-8')).hexdigest()
     return hashed_password
 
+    """
+    Reset password manually:
+    >>> import hashlib
+    >>> password = 'dad'
+    >>> hashed_password = hashlib.md5(password.encode('utf-8')).hexdigest()
+    >>> print(hashed_password)
+    df3939f11965e7e75dbc046cd9af1c67
+    """
+    
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[InputRequired()])
