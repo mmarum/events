@@ -15,7 +15,8 @@ html = r.text
 soup = BeautifulSoup(html, 'html.parser')
 events_html = soup.find(id="frame_1_scroll")
 
-for line in events_html.find_all('span'):
-    if line.get('class') == ['sess_line1']:
-        print(line.get_text())
+#for line in events_html.find_all('span'):
+#    if line.get('class') == ['sess_line1']:
+#        print(line.get_text())
 
+print(events_html.prettify())
